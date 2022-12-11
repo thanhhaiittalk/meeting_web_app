@@ -1,7 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 class AuthRepository {
   final _firebaseAuth = FirebaseAuth.instance;
-
   Future<void> signUp({required String email, required String password}) async {
     try {
       await FirebaseAuth.instance
@@ -17,13 +16,12 @@ class AuthRepository {
     }
   }
 
-  Future<void> signInWithGoogle() async {
+  Future<UserCredential?> signInWithGoogle() async {
     GoogleAuthProvider googleProvider = GoogleAuthProvider();
     googleProvider.addScope('https://www.googleapis.com/auth/contacts.readonly');
     googleProvider.setCustomParameters({'login_hint': 'user@example.com'});
-    
     try {
-      await FirebaseAuth.instance.signInWithPopup(googleProvider);
+      return await FirebaseAuth.instance.signInWithPopup(googleProvider);
     } catch (e) {
       throw Exception(e.toString());
     }

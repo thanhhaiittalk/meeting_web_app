@@ -6,14 +6,14 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:meeting_web_app/bloc/auth_bloc.dart';
 import 'package:meeting_web_app/ui/onboard/sign_in_screen.dart';
 
-class MeetingListScreen extends StatefulWidget {
-  const MeetingListScreen({super.key});
+class RegisterNewUserScreen extends StatefulWidget {
+  const RegisterNewUserScreen({super.key});
 
   @override
-  State<MeetingListScreen> createState() => _MeetingListScreenState();
+  State<RegisterNewUserScreen> createState() => _RegisterNewUserScreenState();
 }
 
-class _MeetingListScreenState extends State<MeetingListScreen> {
+class _RegisterNewUserScreenState extends State<RegisterNewUserScreen> {
   @override
   Widget build(BuildContext context) {
     final user = FirebaseAuth.instance.currentUser!;
@@ -30,6 +30,11 @@ class _MeetingListScreenState extends State<MeetingListScreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            const Text(
+                'New user',
+                style: TextStyle(fontSize: 24),
+                textAlign: TextAlign.center,
+              ),
             Text(
                 'Email: \n ${user.email}',
                 style: const TextStyle(fontSize: 24),
