@@ -1,6 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:meeting_web_app/constant.dart';
+import 'package:meeting_web_app/utils/firebase/firebase_options.dart';
 class FirebaseInitializer extends StatefulWidget {
   final Widget child;
 
@@ -14,7 +14,7 @@ class FirebaseInitializer extends StatefulWidget {
 }
 
 class _FirebaseState extends State<FirebaseInitializer> {
-  final Future<FirebaseApp> _initialization = Firebase.initializeApp(options: ConstantValue.firebaseOptions);
+  final Future<FirebaseApp> _initialization = Firebase.initializeApp(options: DefaultFirebaseOptions.web);
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
