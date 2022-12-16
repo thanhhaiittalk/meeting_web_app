@@ -1,5 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:meeting_web_app/repository/auth/auth_repository.dart';
 
@@ -13,7 +14,7 @@ class AuthBloc extends Bloc<AuthEvent,AuthState> {
     on<GoogleSignInRequested>((event, emit) async {
       emit(Loading());
       try {
-        final userCredential = await authRepository.signInWithGoogle();
+        UserCredential? userCredential = await authRepository.signInWithGoogle();
         if (userCredential != null && userCredential.additionalUserInfo!.isNewUser){
           emit(AuthNewUser());
         } else {

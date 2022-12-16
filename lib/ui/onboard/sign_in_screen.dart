@@ -38,10 +38,10 @@ class _SignInScreenState extends State<SignInScreen> {
         child: BlocBuilder<AuthBloc,AuthState>(
           builder: ((context, state) {
             if (state is Loading){
-              return Center(child: CircularProgressIndicator());
+              return const Center(child: CircularProgressIndicator());
             }
             if (state is UnAuthenticated){
-              return Center(
+              return const Center(
                 child: GoogleSignInButton(),
               );
             }
@@ -50,5 +50,9 @@ class _SignInScreenState extends State<SignInScreen> {
         ), 
         ),
     );
+  }
+  @override
+  void dispose() {
+    super.dispose();
   }
 }

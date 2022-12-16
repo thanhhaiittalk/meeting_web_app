@@ -3,7 +3,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:meeting_web_app/bloc/auth_bloc.dart';
+import 'package:meeting_web_app/bloc/user_register_bloc.dart';
 import 'package:meeting_web_app/repository/auth/auth_repository.dart';
+import 'package:meeting_web_app/repository/database/database_repository.dart';
 import 'package:meeting_web_app/ui/main/meeting_list_screen.dart';
 import 'package:meeting_web_app/ui/onboard/sign_in_screen.dart';
 import 'package:meeting_web_app/utils/firebase/firebase_initializer.dart';
@@ -18,10 +20,23 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return RepositoryProvider(
-      create: (context) => AuthRepository(),
-      child: BlocProvider(
-        create: (context) => AuthBloc(authRepository: RepositoryProvider.of<AuthRepository>(context),),
+    return MultiRepositoryProvider(
+      providers: [
+        RepositoryProvider(create: (context) => AuthRepository()),
+        RepositoryProvider(create: (context) => FirestoreDatabaseRepository())
+      ],
+      child: MultiBlocProvider(
+        providers: [
+          BlocProvider<AuthBloc>(
+              create: (context) => AuthBloc(
+                  authRepository:
+                      RepositoryProvider.of<AuthRepository>(context))),
+
+          BlocProvider<UserRegisterBloc>(
+            create: (context) => UserRegisterBloc(
+              firestoreDatabase: RepositoryProvider.of<FirestoreDatabaseRepository>(context)))
+            
+        ],
         child: MaterialApp(
           home: StreamBuilder<User?>(
             stream: FirebaseAuth.instance.authStateChanges(),
