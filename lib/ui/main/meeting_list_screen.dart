@@ -1,9 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:meeting_web_app/bloc/auth_bloc.dart';
+import 'package:meeting_web_app/ui/main/create_meeting_screen.dart';
 import 'package:meeting_web_app/ui/onboard/sign_in_screen.dart';
 
 class MeetingListScreen extends StatefulWidget {
@@ -47,6 +46,15 @@ class _MeetingListScreenState extends State<MeetingListScreen> {
                 onPressed: () {
                   // Signing out the user
                   context.read<AuthBloc>().add(SignOutRequested());
+                },
+              ),
+              const SizedBox(height: 16),
+              ElevatedButton(
+                child: const Text('Create new meeting'),
+                onPressed: () {
+                  Navigator.of(context).pushAndRemoveUntil(
+              MaterialPageRoute(builder: (context) => const CreateMeetingScreen()),
+              (route) => false);
                 },
               ),
           ],

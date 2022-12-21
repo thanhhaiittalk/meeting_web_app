@@ -18,7 +18,6 @@ class UserRegisterBloc extends Bloc<UserRegisterEvent,UserRegisterState> {
         final user = FirebaseAuth.instance.currentUser!;
         UserModel userModel = UserModel(uid: user.uid, email: user.email, displayName: user.displayName, photoURL: user.photoURL, rating: double.parse((Random().nextDouble() * 5).toStringAsFixed(1)));
         await firestoreDatabase.registerUser(userModel);
-        print("Register $user");
         emit(UserRegisterSuccess());
       } catch (e) {
         emit(UserRegisterError(e.toString()));
