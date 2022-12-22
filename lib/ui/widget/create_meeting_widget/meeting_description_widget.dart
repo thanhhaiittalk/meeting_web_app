@@ -24,7 +24,7 @@ class _MeetingDescriptionWidgetState extends State<MeetingDescriptionWidget> {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
-      onFieldSubmitted: (newValue) {
+      onChanged: (newValue) {
         _tempSaveMeetingDescription(context, newValue);
       },
       keyboardType: TextInputType.text,

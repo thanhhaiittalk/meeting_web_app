@@ -63,9 +63,15 @@ class CreateMeetingBloc extends Bloc<CreateMeetingEvent, CreateMeetingValidate> 
 
   _onTitleChanged(TitleChanged event, Emitter<CreateMeetingValidate> emit){
     newMeetingRepository.setTitle(event.title);
-    emit(state.copyWith(
+    if(event.title.isEmpty){
+      emit(state.copyWith(
+      isTitleValid: ValidState.invalid
+    ));  
+    } else{
+      emit(state.copyWith(
       isTitleValid: ValidState.valid
     ));
+    }
     _checkSubmitValid(emit);
   }
 
@@ -107,13 +113,12 @@ class CreateMeetingBloc extends Bloc<CreateMeetingEvent, CreateMeetingValidate> 
       emit(state.copyWith(
         isDurationValid: ValidState.valid,
       ));
-      _checkSubmitValid(emit);
     }else {
       emit(state.copyWith(
         isDurationValid: ValidState.invalid,
       ));
     }
-
+    _checkSubmitValid(emit);
   }
 
   _onDescriptionChanged(DescriptionChanged event, Emitter<CreateMeetingValidate> emit){
