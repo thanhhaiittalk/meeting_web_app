@@ -33,13 +33,6 @@ class _MeetingDurationWidgetState extends State<MeetingDurationWidget> {
             }
             _tempSaveMeetingDuration(context, int.parse(newValue));
           },
-          // validator: (value) {
-          //   if(int.tryParse(value!) != null){
-          //     _checkNumber = true;
-          //     return true;
-          //   }
-          //   return false; 
-          // },
           inputFormatters: [FilteringTextInputFormatter.digitsOnly],
           keyboardType: TextInputType.number,
           decoration: InputDecoration(

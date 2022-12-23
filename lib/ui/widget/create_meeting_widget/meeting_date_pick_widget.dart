@@ -26,7 +26,11 @@ class _MeetingDatePickWidgetState extends State<MeetingDatePickWidget>
   late final RestorableRouteFuture<DateTime?> _restorableDatePickerRouteFuture =
       RestorableRouteFuture<DateTime?>(
     onComplete:(result) {
+      if(result == null){
+        _checkValidDate(context);
+      }else{
         _tempSaveDate(context, result);
+      }
     },
     onPresent: (NavigatorState navigator, Object? arguments) {
       return navigator.restorablePush(
@@ -67,6 +71,11 @@ class _MeetingDatePickWidgetState extends State<MeetingDatePickWidget>
     );
   }
 
+  void _checkValidDate(context) {
+    BlocProvider.of<CreateMeetingBloc>(context).add(
+      DateCheckValid()
+    );
+  }
   void _updateDate(context){
     BlocProvider.of<CreateMeetingBloc>(context).add(
       UpdateDate()

@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:meeting_web_app/bloc/auth_bloc.dart';
 import 'package:meeting_web_app/ui/main/create_meeting_screen.dart';
 import 'package:meeting_web_app/ui/onboard/sign_in_screen.dart';
+import 'package:meeting_web_app/ui/widget/create_meeting_widget/meeting_create_button_widget.dart';
 
 class MeetingListScreen extends StatefulWidget {
   const MeetingListScreen({super.key});
@@ -49,14 +50,7 @@ class _MeetingListScreenState extends State<MeetingListScreen> {
                 },
               ),
               const SizedBox(height: 16),
-              ElevatedButton(
-                child: const Text('Create new meeting'),
-                onPressed: () {
-                  Navigator.of(context).pushAndRemoveUntil(
-              MaterialPageRoute(builder: (context) => const CreateMeetingScreen()),
-              (route) => false);
-                },
-              ),
+              const CreateMeetingButtonWidget(),
           ],
         ),
       ),

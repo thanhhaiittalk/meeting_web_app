@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -26,11 +28,13 @@ class CreateMeetingBloc extends Bloc<CreateMeetingEvent, CreateMeetingValidate> 
     on<TitleChanged>(_onTitleChanged);
     on<DateChanged>(_onDateChanged);
     on<UpdateDate>(_onUpdateDate);
+    on<DateCheckValid>(_onDateCheckValid);
     on<TimeChanged>(_onTimeChanged);
     on<UpdateTime>(_onUpdateTime);
     on<DurationChanged>(_onDurationChanged);
     on<DescriptionChanged>(_onDescriptionChanged);
     on<Submit>(_onSubmit);
+    on<CheckSubmitValid>(_onCheckSubmit);
   }
 
   void _checkSubmitValid(emit){
@@ -84,6 +88,9 @@ class CreateMeetingBloc extends Bloc<CreateMeetingEvent, CreateMeetingValidate> 
   _onDateChanged(DateChanged event, Emitter<CreateMeetingValidate> emit){
     newMeetingRepository.setTempDate(event.dateTime);
     newMeetingRepository.setMeetingBeginTime();
+    if(event.dateTime == null){
+
+    }
     emit(state.copyWith(
       isDatePickValid: ValidState.valid
     ));
@@ -130,6 +137,7 @@ class CreateMeetingBloc extends Bloc<CreateMeetingEvent, CreateMeetingValidate> 
   }
 
   _onSubmit(Submit event, Emitter<CreateMeetingValidate> emit) async {
+    _checkSubmitValid(emit);
     emit(state.copyWith(
       submitState: SubmitState.loading,
     ));
@@ -161,13 +169,29 @@ class CreateMeetingBloc extends Bloc<CreateMeetingEvent, CreateMeetingValidate> 
         isTimePickValid: ValidState.initial, 
         isDescriptionValid: ValidState.initial, 
         isDurationValid: ValidState.initial, 
-        isMeetingBeginTimeValid: ValidState.initial,
+        isMeetingBeginTimeValid: ValidState.valid,
         submitState: SubmitState.complete
       ));
     } catch(e){
       print(e);
       emit(state.copyWith(
         submitState: SubmitState.error
+      ));
+    }
+  }
+
+  _onCheckSubmit(CheckSubmitValid event, Emitter<CreateMeetingValidate> emit) {
+    _checkSubmitValid(emit);
+  }
+
+  _onDateCheckValid(DateCheckValid event, Emitter<CreateMeetingValidate> emit) {
+    if (newMeetingRepository.tempDate == null){
+      emit(state.copyWith(
+        isDatePickValid: ValidState.invalid
+      ));
+    } else {
+      emit(state.copyWith(
+        isDatePickValid: ValidState.valid
       ));
     }
   }

@@ -6,8 +6,8 @@ class NewMeetingRepository {
   String? title;
   Timestamp? meetingStartTime;
   Timestamp? meetingEndTime;
-  DateTime? _tempDate;
-  TimeOfDay? _tempTime;
+  DateTime? tempDate;
+  TimeOfDay? tempTime;
   User? guest;
   User? host;
   int duration = 0; //in minute
@@ -19,21 +19,21 @@ class NewMeetingRepository {
   }
 
   void setTempDate(DateTime date){
-    _tempDate = date;
+    tempDate = date;
   }
 
   void setTempTime(TimeOfDay time){
-    _tempTime = time;
+    tempTime = time;
   }
 
   void setMeetingBeginTime(){
-    if (_tempDate == null && _tempTime == null) {
+    if (tempDate == null && tempTime == null) {
       //Do nothing
-    } else if (_tempDate != null &&  _tempTime == null){
-      meetingStartTime = Timestamp.fromDate(_tempDate!);
-    } else if (_tempDate != null && _tempTime != null){
+    } else if (tempDate != null &&  tempTime == null){
+      meetingStartTime = Timestamp.fromDate(tempDate!);
+    } else if (tempDate != null && tempTime != null){
       DateTime newDateTime = 
-          DateTime(_tempDate!.year,_tempDate!.month, _tempDate!.day, _tempTime!.hour, _tempTime!.minute);
+          DateTime(tempDate!.year,tempDate!.month, tempDate!.day, tempTime!.hour, tempTime!.minute);
       meetingStartTime = Timestamp.fromDate(newDateTime);
     }
   }
@@ -71,7 +71,7 @@ class NewMeetingRepository {
   void dispose(){
     title = null;
     meetingStartTime = null;
-    _tempDate = null;
+    tempDate = null;
     meetingEndTime = null;
     guest = null;
     host = null;

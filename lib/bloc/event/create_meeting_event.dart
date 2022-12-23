@@ -27,6 +27,12 @@ class UpdateDate extends CreateMeetingEvent {
   List<Object> get props => [];
 }
 
+class DateCheckValid extends CreateMeetingEvent {
+  @override 
+  List<Object> get props => [];
+}
+
+
 class TimeChanged extends CreateMeetingEvent {
   final TimeOfDay timeOfDay;
   const TimeChanged(this.timeOfDay);
@@ -57,5 +63,7 @@ class DescriptionChanged extends CreateMeetingEvent {
 }
 
 class Submit extends CreateMeetingEvent {}
+
+class CheckSubmitValid extends CreateMeetingEvent {}
 
 
